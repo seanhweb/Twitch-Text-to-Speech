@@ -1,0 +1,20 @@
+body{
+    background:#333; 
+    padding-bottom:120px;
+}
+
+#main {
+    color:#fff;
+}
+
+.error {
+    color:#F00;
+}
+
+.success {
+    color:#3ebc3e;
+}
+
+#options-container i, #options-container input {
+    vertical-align:middle;
+}
