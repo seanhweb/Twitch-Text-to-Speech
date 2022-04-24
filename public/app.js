@@ -25,7 +25,10 @@ function speakMessagePolly(message, tags) {
    http.onreadystatechange = function() {
     if (http.readyState == XMLHttpRequest.DONE) {
         var response = JSON.parse(http.responseText); 
-        new Audio(response.url).play();
+        var audiourl = response.url; 
+        document.getElementById("audiotrack").volume = document.querySelector('#volume').value; 
+        document.getElementById("audiotrack").src = audiourl; 
+        document.getElementById("audiotrack").play();
     }
    } 
 }
