@@ -4,6 +4,10 @@ document.getElementById("listenBtn").addEventListener("click", function(event){
   event.preventDefault()
 });
 
+document.getElementById("tipBtn").addEventListener("click", function(event){
+  event.preventDefault()
+});
+
 function speakMessage(message) {
   const utterance = new SpeechSynthesisUtterance(message);
   utterance.volume = document.querySelector('#volume').value;
@@ -84,6 +88,29 @@ function startListening() {
         speakMessagePolly(message,tags); 
       }
     });
+  }
+}
+
+function startCheckout() {
+  var amount = document.querySelector("#tipAmount").value * 100; 
+
+  const sendme = {
+    amount: amount
+  };
+
+  const http = new XMLHttpRequest(); 
+  const url = 'https://dvoiexmle5x3yytqbnix3fwscm0pvpxz.lambda-url.us-west-1.on.aws/';
+
+  http.open("POST", url);
+  http.setRequestHeader("Content-Type", "application/json");
+  http.send(JSON.stringify(sendme));
+
+  http.onreadystatechange = function() {
+    if (http.readyState == XMLHttpRequest.DONE) {
+       var response = JSON.parse(http.responseText); 
+        var url = response.url; 
+        window.location.href = url; 
+    }
   }
 }
 
