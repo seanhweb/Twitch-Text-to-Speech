@@ -104,10 +104,11 @@ function startCheckout() {
   http.open("POST", url);
   http.setRequestHeader("Content-Type", "application/json");
   http.send(JSON.stringify(sendme));
-
+  document.getElementById("tipBtn").disabled = true; 
+  
   http.onreadystatechange = function() {
     if (http.readyState == XMLHttpRequest.DONE) {
-       var response = JSON.parse(http.responseText); 
+        var response = JSON.parse(http.responseText); 
         var url = response.url; 
         window.location.href = url; 
     }
@@ -117,4 +118,14 @@ function startCheckout() {
 function isAZ(string) {
   var res = string.match(/^(#)?[a-zA-Z0-9]{4,25}$/); 
   return (res !== null)
+}
+
+function valueCheck() {
+  let theValue = document.getElementById('tipAmount');
+  if (theValue.value < 0) {
+    theValue.value = Math.abs(theValue.value); 
+  }
+  if(theValue.value <= .50) {
+    theValue.value = 1; 
+  }
 }
