@@ -108,7 +108,7 @@ function startCheckout() {
   http.setRequestHeader("Content-Type", "application/json");
   http.send(JSON.stringify(sendme));
   document.getElementById("tipBtn").disabled = true; 
-  
+  document.getElementById("tipBtn").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
   http.onreadystatechange = function() {
     if (http.readyState == XMLHttpRequest.DONE) {
         var response = JSON.parse(http.responseText); 
