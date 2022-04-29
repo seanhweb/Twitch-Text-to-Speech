@@ -124,7 +124,7 @@ function volumeChange() {
 }
 
 function isAZ(string) {
-  var res = string.match(/^(#)?[a-zA-Z0-9]{4,25}$/); 
+  var res = string.match(/^(#)?[a-zA-Z0-9_]{4,25}$/); 
   return (res !== null)
 }
 
