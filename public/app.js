@@ -118,6 +118,11 @@ function startCheckout() {
   }
 }
 
+function volumeChange() {
+  var currentVolume = document.querySelector('#volume').value;
+  document.getElementById("audiotrack").volume = currentVolume;
+}
+
 function isAZ(string) {
   var res = string.match(/^(#)?[a-zA-Z0-9]{4,25}$/); 
   return (res !== null)
