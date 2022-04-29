@@ -12,9 +12,12 @@ function speakMessage(message) {
   const utterance = new SpeechSynthesisUtterance(message);
   utterance.volume = document.querySelector('#volume').value;
   window.speechSynthesis.speak(utterance);
+  document.getElementById("audiotrack").pause();
+  document.getElementById("audiotrack").currentTime = 0;
 }
 
 function speakMessagePolly(message, tags) {
+  window.speechSynthesis.cancel(); 
   let uuid = self.crypto.randomUUID();
   const sendme = {
       message: message, 

@@ -47,15 +47,15 @@
   <div class="jumbotron">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-sm-12">
+        <div class="col-lg-8 col-md-8 col-sm-12">
           <h1>Twitch Chat TTS</h1>
           <p>Please enter a channel below, then click "Start Listening" for text to speech.</p>
           <form action="#">
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-lg-8 col-md-8 col-sm-8 col">
                 <input id="channelname" name="channel" type="text" class="form-control" />
               </div>
-              <div class="col-md-4">
+              <div class="col-lg-4 col-md-4 4 col-sm-4 col">
                 <button class="btn btn-primary" onclick="startListening()" id="listenBtn" type="submit"> Start
                   Listening</button>
               </div>
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="row">
-              <label for="hqspeech"><small>Use Amazon Polly (Beta)</small></label>
+              <label for="hqspeech"><small>Use <a href="https://aws.amazon.com/polly/" target="_blank">Amazon Polly</a> (Beta)</small></label>
               <div class="col-6">
                 <input id="hqspeech" type="checkbox" />
               </div>
@@ -89,7 +89,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-sm-12">
+        <div class="col-lg-4 col-md-4 col-sm-12 pt-3">
           <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="images/ogshare.jpg" alt="Card image cap">
             <div class="card-body">
@@ -140,6 +140,9 @@
   </nav>
   <script src="tmi.min.js"></script>
   <script src="app.js?v=4"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
 </body>
 
 </html>
