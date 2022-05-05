@@ -83,13 +83,31 @@ function startListening() {
     });
 
     client.on('message', (wat, tags, message, self) => {
-      writeMessage(tags, message); 
-      if(!document.getElementById('hqspeech').checked) {
-        speakMessage(message); 
+      const badges = tags.badges || {};
+      const isBroadcaster = badges.broadcaster;
+      const isMod = badges.moderator;
+
+      if(document.getElementById('modsonly').checked) {
+        if(isBroadcaster || isMod ) {
+          writeMessage(tags, message); 
+          if(!document.getElementById('hqspeech').checked) {
+            speakMessage(message); 
+          }
+          if(document.getElementById('hqspeech').checked) {
+            speakMessagePolly(message,tags); 
+          }
+        }
       }
       else {
-        speakMessagePolly(message,tags); 
+        writeMessage(tags, message); 
+        if(!document.getElementById('hqspeech').checked) {
+          speakMessage(message); 
+        }
+        if(document.getElementById('hqspeech').checked) {
+          speakMessagePolly(message,tags); 
+        }
       }
+      console.log(tags); 
     });
   }
 }
