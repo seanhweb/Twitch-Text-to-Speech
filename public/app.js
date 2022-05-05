@@ -62,8 +62,8 @@ function writeMessage(tags,message) {
 function startListening() {
   const channel = document.querySelector("#channelname").value;
   if(isAZ(channel) == false) {
-    statusElement.className = "error"; 
-    statusElement.textContent = "Please enter just the channel name, not the entire URL."; 
+    statusElement.className = "alert alert-danger"; 
+    statusElement.textContent = "Please enter a valid channel name."; 
   }
   else {
     const client = new tmi.Client({
@@ -76,7 +76,7 @@ function startListening() {
 
     document.getElementById("listenBtn").textContent = "Listening...";
     document.getElementById("listenBtn").disabled = true; 
-    statusElement.className = "success"; 
+    statusElement.className = "alert alert-success"; 
 
     client.connect().then(() => {
       statusElement.textContent = `Connected to twitch. Listening for messages in ${channel}...`;
