@@ -62,19 +62,28 @@
             </div>
           </form>
           <p></p>
-          <p id="status">Waiting for channel name...</p>
+          <div id="status" class="alert alert-info">
+            Waiting for channel name...
+          </div>
+          <p></p>
           <div id="options-container" class="container">
             <div class="row">
               <label for="volume"><small>Speech Volume</small></label>
               <div class="col-6">
                 <i class="bi bi-volume-up-fill"></i>
-                <input id="volume" type="range" min="0" max="1" value="1" step="0.1" onchange="volumeChange()"">
+                <input id="volume" type="range" min="0" max="1" value="1" step="0.1" onchange="volumeChange()">
               </div>
             </div>
             <div class="row">
               <label for="hqspeech"><small>Use <a href="https://aws.amazon.com/polly/" target="_blank">Amazon Polly</a> (Beta)</small></label>
               <div class="col-6">
                 <input id="hqspeech" type="checkbox" />
+              </div>
+            </div>
+            <div class="row">
+              <label for="modsonly"><small>Limit TTS to Moderators Only</small></label>
+              <div class="col-7">
+                <input id="modsonly" type="checkbox" />
               </div>
             </div>
           </div>
@@ -91,7 +100,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 pt-3">
           <div class="card">
-            <img class="card-img-top" src="images/ogshare.jpg" alt="Card image cap">
+            <img class="card-img-top" src="images/ogshare.jpg" alt="PeepoG">
             <div class="card-body">
               <h5 class="card-title">Tip Jar</h5>
               <p class="card-text">While not required by any means, sending a tip helps pay for server costs and my time developing this project. Thanks so much!</p>
@@ -139,7 +148,7 @@
     </div>
   </nav>
   <script src="tmi.min.js"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
