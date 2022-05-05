@@ -65,8 +65,9 @@ class TTS {
     * Write message regardless
   */
   constructor(message, tags) {
+    var HTMLmessage = this.replaceTextEmotes(message, tags); 
     this.speak(message, tags, this.speechType());
-    this.write(message, tags); 
+    this.write(HTMLmessage, tags); 
   }
   /*
     * Determines whether to use Polly or browser based speech
@@ -139,6 +140,19 @@ class TTS {
     div.appendChild(chatMessage); 
 
     document.getElementById("messages").appendChild(div); 
+  }
+  /*
+    * Replaces text emotes with their images for writing to browser
+  */
+  replaceTextEmotes(message, tags) {
+    if(tags['emotes'] == null) {
+      return message; 
+      //no emotes
+    }
+    else {
+      return message;
+      //has emotes
+    }
   }
 }
   /*
