@@ -107,7 +107,6 @@ function startListening() {
           speakMessagePolly(message,tags); 
         }
       }
-      console.log(tags); 
     });
   }
 }
