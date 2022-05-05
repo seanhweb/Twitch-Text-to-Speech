@@ -146,12 +146,15 @@ class TTS {
   */
   replaceTextEmotes(message, tags) {
     if(tags['emotes'] == null) {
-      return message; 
       //no emotes
+      return message; 
     }
     else {
-      return message;
       //has emotes
+      //keys = amount of emotes used in messages and their object name
+      var keys = Object.keys(tags['emotes']); 
+      console.log("There are "+keys.length+" unique emotes in this chat message.");
+      return message;
     }
   }
 }
