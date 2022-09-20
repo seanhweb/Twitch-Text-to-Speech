@@ -23,4 +23,4 @@ jobs:
       run: aws s3 sync ./public/ s3://seanhweb-tts-twitch --delete 
 
     - name: Invalidate Cloudfront
-      run: aws cloudfront create-invalidation --distribution-id E13I9I2FXVSX2J --paths "/*"
+      run: aws cloudfront create-invalidation --distribution-id E3P83JLTHRVCSX --paths "/*"
