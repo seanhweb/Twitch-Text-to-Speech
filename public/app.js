@@ -65,7 +65,7 @@ class TTS {
     * Write message regardless
   */
   constructor(message, tags) {
-    this.speak(message, tags, this.speechType());
+    this.speak(message, tags, this.speechType(), this.announceFlag());
     this.write(message, tags); 
   }
   /*
@@ -85,8 +85,21 @@ class TTS {
     * param tags are the tags sent through tmi.js
     * param type is speaking through polly or browser based
   */
-  speak(message, tags, type) {
+  announceFlag() {
+    if(document.getElementById('announcechatter').checked) {
+      return true; 
+    }
+    if(!document.getElementById('announcechatter').checked) {
+      return false; 
+    }    
+  }
+
+  speak(message, tags, type, announceflag) {
     if(type == 'browser') {
+      if(announceflag == true) {
+        var chatter = tags['display-name']; 
+        message = chatter+" says "+message;
+      }
       const utterance = new SpeechSynthesisUtterance(message);
       utterance.volume = document.querySelector('#volume').value;
       window.speechSynthesis.speak(utterance);
@@ -94,6 +107,10 @@ class TTS {
       document.getElementById("audiotrack").currentTime = 0;
     }
     if(type == 'polly') {
+      if(announceflag == true) {
+        var chatter = tags['display-name']; 
+        message = chatter+" says "+message;
+      }      
       window.speechSynthesis.cancel(); 
       let uuid = self.crypto.randomUUID();
       const sendme = {
