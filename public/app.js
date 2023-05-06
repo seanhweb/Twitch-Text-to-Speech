@@ -102,6 +102,16 @@ class TTS {
       }
       const utterance = new SpeechSynthesisUtterance(message);
       utterance.volume = document.querySelector('#volume').value;
+
+      const voices = speechSynthesis.getVoices();
+      var voiceSelect = document.getElementById('voiceSelect');
+      const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
+      for (let i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          utterance.voice = voices[i];
+        }
+      }
+
       window.speechSynthesis.speak(utterance);
       document.getElementById("audiotrack").pause();
       document.getElementById("audiotrack").currentTime = 0;
@@ -224,4 +234,23 @@ function startCheckout() {
 function valueCheck() {
   var tipHandler = new Tip; 
   tipHandler.valueCheck(); 
+}
+
+function populateVoiceList() {
+  if (typeof speechSynthesis === "undefined") {
+    return;
+  }
+  const voices = speechSynthesis.getVoices();
+  for (let i = 0; i < voices.length; i++) {
+    const option = document.createElement("option");
+    option.textContent = `${voices[i].name} (${voices[i].lang})`;
+
+    option.setAttribute("data-lang", voices[i].lang);
+    option.setAttribute("data-name", voices[i].name);
+    document.getElementById("voiceSelect").appendChild(option);
+  }
+}
+
+window.speechSynthesis.onvoiceschanged = function() {
+  populateVoiceList();
 }
