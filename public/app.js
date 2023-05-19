@@ -251,6 +251,18 @@ function populateVoiceList() {
   }
 }
 
+/*
+  * If Channel Name is in the URL, autostart listening
+*/
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if(urlParams.get('channelname') !== null) {
+  document.querySelector("#channelname").value = urlParams.get('channelname');
+  startListening();
+};
+
 window.speechSynthesis.onvoiceschanged = function() {
   populateVoiceList();
 }
+
