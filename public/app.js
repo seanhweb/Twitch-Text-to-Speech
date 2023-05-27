@@ -267,6 +267,15 @@ function copyURL() {
   alert("Copied URL to clipboard.");
 }
 
+function skipMessage() {
+  //stops Polly Speech
+  document.getElementById("audiotrack").pause();
+  document.getElementById("audiotrack").currentTime = 0;
+
+  //stops Browser speech
+  window.speechSynthesis.cancel();
+}
+
 /*
   * If Channel Name is in the URL, autostart listening
 */
