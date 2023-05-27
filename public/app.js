@@ -251,6 +251,34 @@ function populateVoiceList() {
   }
 }
 
+function exportSettings() {
+  var channelName = document.querySelector("#channelname").value;
+  document.getElementById('settingsURL').value = "https://twitchtts.net?channelname="+channelName;
+  if(channelName == "") {
+    alert("You do not have a channel name entered. Please enter a channel name to generate a URL.");
+    document.getElementById('settingsURL').value = "";
+  }
+}
+
+function copyURL() {
+  var copyText = document.getElementById('settingsURL');
+  copyText.select(); 
+  navigator.clipboard.writeText(copyText.value);
+  alert("Copied URL to clipboard.");
+}
+
+/*
+  * If Channel Name is in the URL, autostart listening
+*/
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if(urlParams.get('channelname') !== null) {
+  document.querySelector("#channelname").value = urlParams.get('channelname');
+  document.getElementById("hqspeech").checked = true;
+  startListening();
+};
+
 window.speechSynthesis.onvoiceschanged = function() {
   populateVoiceList();
 }

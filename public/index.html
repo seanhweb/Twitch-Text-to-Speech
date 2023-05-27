@@ -108,8 +108,6 @@
                 <input id="announcechatter" type="checkbox" />
               </div>
             </div>            
-          </div>
-          <div class="container">
             <div class="row">
               <div class="col-12">
               <small><i>Note: Amazon Polly integration is a very early work in progress. Messages sent will <a
@@ -119,6 +117,9 @@
             </div>
             <div class="row">
               <audio id="audiotrack"></audio>
+            </div>
+            <div class="row">
+              <button class="btn btn-dark mt-3 ml-2" data-toggle="modal" data-target="#settingsModal" onclick="exportSettings()">Export Channel to URL</button>
             </div>
           </div>
         </div>
@@ -149,6 +150,33 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Browser Source Export</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Below is a url you can place as a browser source into OBS. This URL will auto apply your channel name and start listening for messages.</p><p>Note that only Amazon Polly is supported as a browser source for OBS.</p>
+          <div class="row">
+            <div class="col-8">
+            <input id="settingsURL" class="form-control" value="" disabled />
+          </div>
+          <div class="col-4">
+            <button class="btn btn-outline-dark" onclick="copyURL()">Copy URL</button>
+          </div>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container" id="main">
     <div id="messages"></div>
   </div>
@@ -162,10 +190,10 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/seanhweb/Twitch-Text-to-Speech">Source Code</a>
+            <a class="nav-link" href="https://github.com/seanhweb/Twitch-Text-to-Speech" target="_blank">Source Code</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://www.seanhweb.com">seanhweb</a>
+            <a class="nav-link" href="https://www.seanhweb.com" target="_blank">Creator - Seanhweb</a>
           </li>
         </ul>
       </div>
