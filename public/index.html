@@ -12,10 +12,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Twitch Chat TTS</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css" type="text/css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <script src="https://kit.fontawesome.com/9f09c1c112.js" crossorigin="anonymous"></script>
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:creator" content="@seanhweb" />
@@ -43,165 +40,123 @@
 
 </head>
 
-<body>
-  <div class="jumbotron">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-12">
-          <h1>Twitch Chat TTS</h1>
-          <p>Please enter a channel below, then click "Start Listening" for text to speech.</p>
-          <form action="#">
-            <div class="row">
-              <div class="col-lg-8 col-md-8 col-sm-8 col">
-                <input id="channelname" name="channel" type="text" class="form-control" />
-              </div>
-              <div class="col-lg-4 col-md-4 4 col-sm-4 col">
-                <button class="btn btn-primary" onclick="startListening()" id="listenBtn" type="submit"> Start
-                  Listening</button>
-              </div>
-            </div>
-          </form>
-          <p></p>
-          <div id="status" class="alert alert-info">
-            Waiting for channel name...
-          </div>
-          <p></p>
-          <div id="options-container" class="container">
-            <div class="row">
-              <div class="col-6">
-                <label for="volume"><small>Speech Volume</small></label>
-              </div>
-              <div class="col-6">
-                <i class="bi bi-volume-up-fill"></i>
-                <input id="volume" type="range" min="0" max="1" value="1" step="0.1" onchange="volumeChange()">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <label for="voiceSelect"><small>Voice (not applicable to Polly)</small></label>
-              </div>
-              <div class="col-6">
-                <select id="voiceSelect" class="form-control"></select>
-              </div>
-            </div> 
-            <div class="row">
-              <div class="col-6">
-                <label for="hqspeech"><small>Use <a href="https://aws.amazon.com/polly/" target="_blank">Amazon Polly</a> (Beta)</small></label>
-              </div>
-              <div class="col-6">
-                <input id="hqspeech" type="checkbox" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <label for="modsonly"><small>Limit TTS to Moderators Only</small></label>
-              </div>
-              <div class="col-5">
-                <input id="modsonly" type="checkbox" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <label for="announcechatter"><small>Announce Chatter's Name Before Message</small></label>
-              </div>
-              <div class="col-6">
-                <input id="announcechatter" type="checkbox" />
-              </div>
-            </div>            
-            <div class="row">
-              <div class="col-12">
-              <small><i>Note: Amazon Polly integration is a very early work in progress. Messages sent will <a
-                    href="https://www.youtube.com/watch?v=YyIrilqBDaU" target="_blank">parry</a> each other, rather than
-                  queue.</i></small>
-                </div>
-            </div>
-            <div class="row">
-              <audio id="audiotrack"></audio>
-            </div>
-            <div class="row">
-              <button class="btn btn-dark mt-3 ml-2" data-toggle="modal" data-target="#settingsModal" onclick="exportSettings()">Export Channel to URL</button>
-            </div>
-            <div class="row">
-              <button class="btn btn-danger mt-3 ml-2" onclick="skipMessage()">Skip Message</button>
-            </div>            
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 pt-3">
-          <div class="card">
-            <img class="card-img-top" src="images/ogshare.jpg" alt="PeepoG">
-            <div class="card-body">
-              <h5 class="card-title">Tip Jar</h5>
-              <p class="card-text">While not required by any means, sending a tip helps pay for server costs and my time developing this project. Thanks so much!</p>
-              <form action="#">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">$</div>
-                        <input type="number" min="0" class="form-control" value="5" id="tipAmount" onchange="valueCheck()" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <button class="btn btn-primary" id="tipBtn" type="submit" onclick="startCheckout()">Send Tip</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="settingsModalLabel">Browser Source Export</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+<body class="bg-slate-100">
+
+  <nav class="bg-gray-800">
+    <div class="mx-auto container">
+      <div class="relative flex h-16 items-center justify-between">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Mobile menu button-->
+          <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open main menu</span>
+            <!--
+              Icon when menu is closed.
+  
+              Menu open: "hidden", Menu closed: "block"
+            -->
+            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <!--
+              Icon when menu is open.
+  
+              Menu open: "block", Menu closed: "hidden"
+            -->
+            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
-        <div class="modal-body">
-          <p>Below is a url you can place as a browser source into OBS. This URL will auto apply your channel name and start listening for messages.</p><p>Note that only Amazon Polly is supported as a browser source for OBS.</p>
-          <div class="row">
-            <div class="col-8">
-            <input id="settingsURL" class="form-control" value="" disabled />
+        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div class="flex flex-shrink-0 items-center">
+            <img class="h-8 w-auto" src="images/PeepoG.png" alt="Twitch TTS">
           </div>
-          <div class="col-4">
-            <button class="btn btn-outline-dark" onclick="copyURL()">Copy URL</button>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+            </div>
           </div>
-         </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container" id="main">
-    <div id="messages"></div>
-  </div>
-  <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Twitch TTS</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/seanhweb/Twitch-Text-to-Speech" target="_blank">Source Code</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.seanhweb.com" target="_blank">Creator - Seanhweb</a>
-          </li>
-        </ul>
+  
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="sm:hidden" id="mobile-menu">
+      <div class="space-y-1 px-2 pb-3 pt-2">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
       </div>
     </div>
   </nav>
+
+
+  <div class="container mx-auto">
+    <div class="flex flex-row">
+      <div class="basis-4/5">
+          <div class="sm:col-span-4 p-5">
+            <div class="mt-2">
+              <h1 class="text-xl mt-2 mb-5 font-bold">Twitch TTS Tool</h1>
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Channel Name</label>
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-200 sm:max-w-md">
+                <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">twitch.tv /</span>
+                <input type="text" name="channelname" id="channelname" autocomplete="username" class="block flex-1 border-0 bg-white py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="bagofchaos" />
+                <button class="bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white">
+                  Start Listening
+                </button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <label for="volume" class="block text-sm font-medium leading-6 text-gray-900">Speech Volume</label>
+              <input id="volume" type="range" min="0" max="1" value="1" step="0.1" onchange="volumeChange()">
+            </div>
+            <div class="mt-2">
+              <div class="flex items-center mb-4">
+                  <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Limit TTS To Moderators Only</label>
+              </div>
+              <div class="flex">
+                <div class="flex items-center h-5">
+                  <input checked id="announce" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div class="ml-2 text-sm">
+                  <label for="announce" class="font-medium text-gray-900">Announce Chatter's Name Before Message</label>
+                  <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500">"Bagofchaos says: KEKW"</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6">
+              <div class="flex items-center">
+                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white mr-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+                  </svg>                  
+                </button>
+                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 bg-white rounded-xl shadow-lg flex items-center p-6 max-w-md">
+            <div>
+              <h2 class="font-bold leading-12 text-gray-900">Tip Jar</h2>
+              <p class="text-sm font-sans">While not required by any means, sending a tip helps pay for server costs and my time developing this project. Thanks so much!</p>
+              <button class="mt-3 bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white">Send Tip</button>
+            </div>
+          </div>
+      </div><!-- basis 4/5-->
+      <div class="basis-1/5 border-l-slate-200 border-l-2">
+        <div class="p-5">
+          <p>Chat</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="tmi.min.js"></script>
   <script src="app.js?v=2"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
