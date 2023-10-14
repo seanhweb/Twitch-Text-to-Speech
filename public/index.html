@@ -75,7 +75,7 @@
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">TTS Tool V2</a>
             </div>
           </div>
         </div>
@@ -86,10 +86,10 @@
     <div class="sm:hidden" id="mobile-menu">
       <div class="space-y-1 px-2 pb-3 pt-2">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">TTS Tool V2</a>
       </div>
     </div>
-  </nav>
+  </nav>s
 
 
   <div class="container mx-auto">
@@ -99,10 +99,10 @@
             <div class="mt-2">
               <h1 class="text-xl mt-2 mb-5 font-bold">Twitch TTS Tool</h1>
               <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Channel Name</label>
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-200 sm:max-w-md">
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-200 sm:max-w-md border-gray-600">
                 <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">twitch.tv /</span>
-                <input type="text" name="channelname" id="channelname" autocomplete="username" class="block flex-1 border-0 bg-white py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="bagofchaos" />
-                <button class="bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white">
+                <input type="text" name="channelname" id="channelname" class="block flex-1 border-2 bg-white py-1.5 pl-1 border-l-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 border-slate-300" placeholder="yourchannelhere" />
+                <button class="bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white" onclick="startListening()" id="listenBtn">
                   Start Listening
                 </button>
               </div>
@@ -113,27 +113,27 @@
             </div>
             <div class="mt-2">
               <div class="flex items-center mb-4">
-                  <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Limit TTS To Moderators Only</label>
+                  <input type="checkbox" id="modsonly" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="modsonly" class="ml-2 text-sm font-medium text-gray-900 ">Limit TTS To Moderators Only</label>
               </div>
               <div class="flex">
                 <div class="flex items-center h-5">
-                  <input checked id="announce" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <input checked id="announcechatter" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 </div>
                 <div class="ml-2 text-sm">
-                  <label for="announce" class="font-medium text-gray-900">Announce Chatter's Name Before Message</label>
-                  <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500">"Bagofchaos says: KEKW"</p>
+                  <label for="announcechatter" class="font-medium text-gray-900">Announce Chatter's Name Before Message</label>
+                  <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500">"Chatter says: KEKW"</p>
                 </div>
               </div>
             </div>
             <div class="mt-6">
               <div class="flex items-center">
-                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white mr-5">
+                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white mr-5 active:bg-red-800" onclick="stopListening()">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
                   </svg>                  
                 </button>
-                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white">
+                <button class="bg-red-600 hover:bg-red-400 px-5 py-2 text-sm leading-5 font-semibold text-white active:bg-red-800" onclick="skipMessage()">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
                   </svg>
@@ -141,11 +141,22 @@
               </div>
             </div>
           </div>
+          <div class="">
+            <audio id="audiotrack"></audio>
+          </div>
           <div class="mt-6 bg-white rounded-xl shadow-lg flex items-center p-6 max-w-md">
             <div>
               <h2 class="font-bold leading-12 text-gray-900">Tip Jar</h2>
               <p class="text-sm font-sans">While not required by any means, sending a tip helps pay for server costs and my time developing this project. Thanks so much!</p>
-              <button class="mt-3 bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white">Send Tip</button>
+              
+              <label for="amount" class="block text-sm font-medium leading-6 text-gray-900">Amount</label>
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-200 max-w-sm">
+                <span class="flex select-none items-center pl-3 pr-3 text-gray-500 sm:text-sm">$</span>
+                <input type="number" name="amount" id="amount" class="block flex-1 border-2 border-l-0 border-slate-200 bg-white py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="" value="5" />
+                <button class="bg-indigo-600 hover:bg-indigo-400 px-5 py-2 text-sm leading-5 font-semibold text-white" id="tipBtn">
+                  Send Tip
+                </button>
+              </div>
             </div>
           </div>
       </div><!-- basis 4/5-->
@@ -153,12 +164,15 @@
         <div class="p-5">
           <p>Chat</p>
         </div>
+        <div class="pl-5 pt-1" id="messages">
+
+        </div>
       </div>
     </div>
   </div>
 
   <script src="tmi.min.js"></script>
-  <script src="app.js?v=2"></script>
+  <script src="app.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  

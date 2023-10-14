@@ -65,19 +65,8 @@ class TTS {
     * Write message regardless
   */
   constructor(message, tags) {
-    this.speak(message, tags, this.speechType(), this.announceFlag());
+    this.speak(message, tags, this.announceFlag());
     this.write(message, tags); 
-  }
-  /*
-    * Determines whether to use Polly or browser based speech
-  */
-  speechType() {
-    if(!document.getElementById('hqspeech').checked) {
-      return 'browser';
-    }
-    if(document.getElementById('hqspeech').checked) {
-      return 'polly';
-    }
   }
   /*
     * Speaks a message
@@ -94,29 +83,7 @@ class TTS {
     }    
   }
 
-  speak(message, tags, type, announceflag) {
-    if(type == 'browser') {
-      if(announceflag == true) {
-        var chatter = tags['display-name']; 
-        message = chatter+" says "+message;
-      }
-      const utterance = new SpeechSynthesisUtterance(message);
-      utterance.volume = document.querySelector('#volume').value;
-
-      const voices = speechSynthesis.getVoices();
-      var voiceSelect = document.getElementById('voiceSelect');
-      const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
-      for (let i = 0; i < voices.length; i++) {
-        if (voices[i].name === selectedOption) {
-          utterance.voice = voices[i];
-        }
-      }
-
-      window.speechSynthesis.speak(utterance);
-      document.getElementById("audiotrack").pause();
-      document.getElementById("audiotrack").currentTime = 0;
-    }
-    if(type == 'polly') {
+  speak(message, tags, announceflag) {
       if(announceflag == true) {
         var chatter = tags['display-name']; 
         message = chatter+" says "+message;
@@ -143,7 +110,6 @@ class TTS {
         }
        }
     }
-  }
   /*
     * write a message to the browser
     * param message is the tmi.js twitch message
@@ -151,7 +117,7 @@ class TTS {
   */
   write(message, tags) {
     let div = document.createElement('div'); 
-    div.className = "single-message";
+    div.className = "single-message max-w-md";
 
     let chatter = document.createElement('span'); 
     chatter.className= "chatter";
@@ -159,7 +125,7 @@ class TTS {
     chatter.textContent = tags['display-name']+': ';
 
     let chatMessage = document.createElement('span'); 
-    chatMessage.className= "messageContent"; 
+    chatMessage.className= "messageContent break-words"; 
     chatMessage.textContent = message; 
 
     div.appendChild(chatter); 
@@ -175,11 +141,9 @@ class TTS {
   */
 function startListening() {
   var validator = new Validator;
-  const statusElement = document.querySelector('#status'); 
   const channel = document.querySelector("#channelname").value;
   if(validator.isAZ(channel) == false) {
-    statusElement.className = "alert alert-danger"; 
-    statusElement.textContent = "Please enter a valid channel name."; 
+    alert("Please enter a valid channel name.");
   }
   else {
     const client = new tmi.Client({
@@ -190,13 +154,11 @@ function startListening() {
       channels: [channel],
     });
 
-    document.getElementById("listenBtn").textContent = "Listening...";
-    document.getElementById("listenBtn").disabled = true; 
-    statusElement.className = "alert alert-success"; 
-
     client.connect().then(() => {
-      statusElement.textContent = `Connected to twitch. Listening for messages in ${channel}...`;
+      document.getElementById("listenBtn").textContent = "Listening...";
+      document.getElementById("listenBtn").disabled = true; 
     });
+
 
     client.on('message', (wat, tags, message, self) => {
       const badges = tags.badges || {};
@@ -268,12 +230,8 @@ function copyURL() {
 }
 
 function skipMessage() {
-  //stops Polly Speech
   document.getElementById("audiotrack").pause();
   document.getElementById("audiotrack").currentTime = 0;
-
-  //stops Browser speech
-  window.speechSynthesis.cancel();
 }
 
 /*
@@ -287,7 +245,3 @@ if(urlParams.get('channelname') !== null) {
   document.getElementById("hqspeech").checked = true;
   startListening();
 };
-
-window.speechSynthesis.onvoiceschanged = function() {
-  populateVoiceList();
-}
