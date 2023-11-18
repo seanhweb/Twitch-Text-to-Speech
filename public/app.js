@@ -199,18 +199,40 @@ function startListening() {
     });
 
     client.on('message', (wat, tags, message, self) => {
-      const badges = tags.badges || {};
-      const isBroadcaster = badges.broadcaster;
-      const isMod = badges.moderator;
-      if(document.getElementById('modsonly').checked) {
-        if(isBroadcaster || isMod ) {
-          new TTS(message, tags);
-        }
-      }
-      else {
-        new TTS(message, tags); 
-      }
+      manageOptions(tags, message);
     });
+  }
+}
+
+function manageOptions(tags, message) {
+  const badges = tags.badges || {};
+  const isBroadcaster = badges.broadcaster;
+  const isMod = badges.moderator;
+
+  const excludedchatterstextarea = document.getElementById('excluded-chatters');
+  var lines = excludedchatterstextarea.value.split('\n');
+  var lines = lines.map(line => line.toLowerCase());
+
+  if(document.getElementById('modsonly').checked) {
+    if(isBroadcaster || isMod ) {
+      new TTS(message, tags);
+      return;
+    }
+  }
+  if(document.getElementById('exclude-toggle').checked) {
+    console.log(lines);
+    if(lines.includes(tags['display-name'].toLowerCase())) {
+      return;
+    }
+    else {
+      new TTS(message, tags);
+      console.log('not in lines');
+      return;
+    }
+  }
+  else {
+    new TTS(message, tags); 
+    return;
   }
 }
 
