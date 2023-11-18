@@ -53,7 +53,12 @@
           <form action="#">
             <div class="row">
               <div class="col-lg-8 col-md-8 col-sm-8 col">
-                <input id="channelname" name="channel" type="text" class="form-control" />
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">twitch.tv/</span>
+                  </div>
+                  <input id="channelname" name="channel" type="text" class="form-control" />
+                </div>
               </div>
               <div class="col-lg-4 col-md-4 4 col-sm-4 col">
                 <button class="btn btn-primary" onclick="startListening()" id="listenBtn" type="submit"> Start
