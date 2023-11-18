@@ -112,7 +112,24 @@
               <div class="col-6">
                 <input id="announcechatter" type="checkbox" />
               </div>
-            </div>            
+            </div>   
+            <div class="row">
+              <div class="col-6">
+                <label for="exclude"><small>Exclude Certain Chatters</small></label>
+              </div>
+              <div class="col-6">
+                <input id="exclude-toggle" type="checkbox" />
+              </div>
+            </div>    
+            <div class="row d-none" id="exclude-options">
+              <div class="col-6">
+                <small>Please enter the chatters you would like to exclude in the box on the right, making a new line for each chatter.</small>
+                <button class="btn btn-outline-primary" onclick="fillInBots()">Start with Known Bots</button>
+              </div>
+              <div class="col-6">
+                <textarea id="excluded-chatters" rows="10" class="form-control" placeholder="XQC&#10;BagofChaos"></textarea>
+              </div>
+            </div>                    
             <div class="row">
               <div class="col-12">
               <small><i>Note: Amazon Polly integration is a very early work in progress. Messages sent will <a

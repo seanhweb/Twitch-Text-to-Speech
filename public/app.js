@@ -291,3 +291,27 @@ if(urlParams.get('channelname') !== null) {
 window.speechSynthesis.onvoiceschanged = function() {
   populateVoiceList();
 }
+
+/*
+  If the checkbox is selected to exclude chatters, show the options for it.
+*/
+document.getElementById("exclude-toggle").addEventListener("change", function() {
+  var options = document.getElementById('exclude-options');
+  if(this.checked == true) {
+    options.classList.remove('d-none');
+  }
+  if(this.checked == false) {
+    options.classList.add('d-none');
+  }
+});
+
+/*
+  Fills in the excluded chatters list with a predefined list of known moderation bots
+*/
+function fillInBots() {
+  var excludedChatters = document.getElementById("excluded-chatters");
+  excludedChatters.value = "Nightbot\nMoobot\nStreamElements\nStreamlabs\nFossabot";
+}
+
+
+
