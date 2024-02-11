@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitch Chat TTS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:creator" content="@seanhweb" />
+  <link rel="stylesheet" href="/fa/css/all.min.css" type="text/css" />
+  <meta property="og:url" content="https://www.twitchtts.net" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Twitch Chat TTS" />
+  <meta property="og:description"
+    content="Please enter a channel below, then click Start Listening for text to speech." />
+  <meta property="og:image" content="https://www.twitchtts.net/images/ogshare.jpg" />
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JT0GEBW5MK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-JT0GEBW5MK');
+  </script>
+  </head>
+  <body>
+    <main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h1>Twitch TTS - Announcements</h1>
+                <article>
+                    <h2>Introduction of Ads</h2>
+                    <p>Hi everyone, first off I want to say thank you for using the tool. A lot of you are, and it makes me happy that something I built is being used by many people. However, the cost of operation has become high, specifically around Amazon Polly.</p>
+                    <img src="images/polly.png" class="img-fluid" />
+                    <p>As you can see in the graph above, the costs of running Amazon Polly are increasing every month.  I'm left with three options:</p>
+                    <ol>
+                        <li>Increase Revenue</li>
+                        <li>Remove Amazon Polly</li>
+                        <li>Eat the cost</li>
+                    </ol>
+                    <p>As it stands right now I can afford to keep running this, however if the costs become too great I can't. With that said, I'm preparing the website to display ads via Google Adsense. I can't ask you to turn off your adblocker, but I would greatly appreciate it. If you'd like to make a donation to the project, you can do so with the button below.</p>
+                    <p>Again, thank you so much for using this tool!</p>
+                    <a href="https://donate.stripe.com/7sIbL38cP2ohe5O288" class="btn btn-primary">Send a Tip</a>
+                </article>
+            </div>
+        </div>
+    </div>
+    </main>
+    <footer>
+      <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">Twitch TTS</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto"> 
+              <li class="nav-item">
+                <a class="nav-link" href="/announcements">Announcements</a>
+              </li>  
+              <li class="nav-item">
+                <a class="nav-link" href="/privacy-policy">Privacy Policy</a>
+              </li>          
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/seanhweb/Twitch-Text-to-Speech" target="_blank">Source Code</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.seanhweb.com" target="_blank">Creator - Seanhweb</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      </footer>
+  </body>
+
+  </html>
