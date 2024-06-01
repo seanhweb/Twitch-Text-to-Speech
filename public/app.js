@@ -2,11 +2,6 @@ document.getElementById("listenBtn").addEventListener("click", function(event){
   event.preventDefault()
 });
 
-document.getElementById("tipBtn").addEventListener("click", function(event){
-  event.preventDefault()
-});
-
-
 class Validator {
   /*
     * Determines whether the channel name is valid
@@ -61,29 +56,19 @@ class Tip {
 class TTS {
   /*
     * On Construct
-    * Speak message, determine whether polly is checked 
-    * Write message regardless
+    * Write message
   */
   constructor(message, tags) {
     this.speak(message, tags, this.speechType(), this.announceFlag());
     this.write(message, tags); 
   }
-  /*
-    * Determines whether to use Polly or browser based speech
-  */
   speechType() {
-    if(!document.getElementById('hqspeech').checked) {
-      return 'browser';
-    }
-    if(document.getElementById('hqspeech').checked) {
-      return 'polly';
-    }
+    return 'browser';
   }
   /*
     * Speaks a message
     * param message is the tmi.js twitch message
     * param tags are the tags sent through tmi.js
-    * param type is speaking through polly or browser based
   */
   announceFlag() {
     if(document.getElementById('announcechatter').checked) {
@@ -113,35 +98,6 @@ class TTS {
       }
 
       window.speechSynthesis.speak(utterance);
-      document.getElementById("audiotrack").pause();
-      document.getElementById("audiotrack").currentTime = 0;
-    }
-    if(type == 'polly') {
-      if(announceflag == true) {
-        var chatter = tags['display-name']; 
-        message = chatter+" says "+message;
-      }      
-      window.speechSynthesis.cancel(); 
-      let uuid = self.crypto.randomUUID();
-      const sendme = {
-          message: message, 
-          id: uuid, 
-          user: tags['display-name']
-      };
-       const http = new XMLHttpRequest(); 
-       const url = 'https://wb971sijqi.execute-api.us-west-1.amazonaws.com/speech';
-       http.open("POST", url);
-       http.setRequestHeader("Content-Type", "application/json");
-       http.send(JSON.stringify(sendme));
-       http.onreadystatechange = function() {
-        if (http.readyState == XMLHttpRequest.DONE) {
-            var response = JSON.parse(http.responseText); 
-            var audiourl = response.url; 
-            document.getElementById("audiotrack").volume = document.querySelector('#volume').value; 
-            document.getElementById("audiotrack").src = audiourl; 
-            document.getElementById("audiotrack").play();
-        }
-       }
     }
   }
   /*
@@ -236,13 +192,7 @@ function manageOptions(tags, message) {
   }
 }
 
-/*
-  * Changes the volume of Polly speech. 
-*/
-function volumeChange() {
-  var currentVolume = document.querySelector('#volume').value;
-  document.getElementById("audiotrack").volume = currentVolume;
-}
+
 /*
   * Starts stripe checkout
 */
@@ -290,10 +240,6 @@ function copyURL() {
 }
 
 function skipMessage() {
-  //stops Polly Speech
-  document.getElementById("audiotrack").pause();
-  document.getElementById("audiotrack").currentTime = 0;
-
   //stops Browser speech
   window.speechSynthesis.cancel();
 }
