@@ -11,47 +11,13 @@ class Validator {
     var res = string.match(/^(#)?[a-zA-Z0-9_]{4,25}$/); 
     return (res !== null)
   }
-}
-
-class Tip {
-  /*
-    * Checks the value in the "Tip" section and makes sure it is a minimum of $1. 
-    * Also makes sure the value is not negative
-    * Stripe does not allow less than 50c. 
-  */
-  valueCheck() {
-    let theValue = document.getElementById('tipAmount');
-    if (theValue.value < 0) {
-      theValue.value = Math.abs(theValue.value); 
-    }
-    if(theValue.value <= .50) {
-      theValue.value = 1; 
-    }
-  }
-  startCheckout() {
-    var amount = document.querySelector("#tipAmount").value * 100; 
-
-    const sendme = {
-      amount: amount
-    };
-  
-    const http = new XMLHttpRequest(); 
-    const url = 'https://dvoiexmle5x3yytqbnix3fwscm0pvpxz.lambda-url.us-west-1.on.aws/';
-  
-    http.open("POST", url);
-    http.setRequestHeader("Content-Type", "application/json");
-    http.send(JSON.stringify(sendme));
-    document.getElementById("tipBtn").disabled = true; 
-    document.getElementById("tipBtn").innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-    http.onreadystatechange = function() {
-      if (http.readyState == XMLHttpRequest.DONE) {
-          var response = JSON.parse(http.responseText); 
-          var url = response.url; 
-          window.location.href = url; 
-      }
-    }
+  isLink(string) { 
+    var LINK_DETECTION_REGEX = string.match(/(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi);
+    return (LINK_DETECTION_REGEX !== null)
   }
 }
+
+
 
 class TTS {
   /*
@@ -161,6 +127,7 @@ function startListening() {
 }
 
 function manageOptions(tags, message) {
+  var validator = new Validator; 
   const badges = tags.badges || {};
   const isBroadcaster = badges.broadcaster;
   const isMod = badges.moderator;
@@ -168,7 +135,9 @@ function manageOptions(tags, message) {
   const excludedchatterstextarea = document.getElementById('excluded-chatters');
   var lines = excludedchatterstextarea.value.split('\n');
   var lines = lines.map(line => line.toLowerCase());
-
+  if(validator.isLink(message) == true) { 
+    return; 
+  }
   if(document.getElementById('nocommands').checked && message.startsWith("!")) {
     return;
   }
@@ -193,22 +162,6 @@ function manageOptions(tags, message) {
     new TTS(message, tags); 
     return;
   }
-}
-
-
-/*
-  * Starts stripe checkout
-*/
-function startCheckout() {
-  var tipHandler = new Tip; 
-  tipHandler.startCheckout(); 
-}
-/*
-  * Checks the Tip value
-*/
-function valueCheck() {
-  var tipHandler = new Tip; 
-  tipHandler.valueCheck(); 
 }
 
 function populateVoiceList() {
@@ -284,5 +237,6 @@ function fillInBots() {
   excludedChatters.value = "Nightbot\nMoobot\nStreamElements\nStreamlabs\nFossabot";
 }
 
-
-
+window.onload = function() {
+  populateVoiceList();
+};
