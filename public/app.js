@@ -169,6 +169,9 @@ function manageOptions(tags, message) {
   var lines = excludedchatterstextarea.value.split('\n');
   var lines = lines.map(line => line.toLowerCase());
 
+  if(document.getElementById('nocommands').checked && message.startsWith("!")) {
+    return;
+  }
   if(document.getElementById('modsonly').checked) {
     if(isBroadcaster || isMod ) {
       new TTS(message, tags);
