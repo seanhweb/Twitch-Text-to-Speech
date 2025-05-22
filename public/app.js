@@ -2,6 +2,9 @@ document.getElementById("listenBtn").addEventListener("click", function(event){
   event.preventDefault()
 });
 
+let isListening = false;
+let twitchClient = null;
+
 class Validator {
   /*
     * Determines whether the channel name is valid
@@ -71,6 +74,7 @@ class TTS {
     * param message is the tmi.js twitch message
     * param tags are the tags sent through tmi.js
   */
+
   write(message, tags) {
     let div = document.createElement('div'); 
     div.className = "single-message";
@@ -104,7 +108,7 @@ function startListening() {
     statusElement.textContent = "Please enter a valid channel name."; 
   }
   else {
-    const client = new tmi.Client({
+    twitchClient = new tmi.Client({
       connection: {
         secure: true,
         reconnect: true,
@@ -112,15 +116,16 @@ function startListening() {
       channels: [channel],
     });
 
-    document.getElementById("listenBtn").textContent = "Listening...";
-    document.getElementById("listenBtn").disabled = true; 
+    document.getElementById("listenBtn").textContent = "Stop Listening";
+    document.getElementById("listenBtn").disabled = false; 
+    isListening = true;
     statusElement.className = "alert alert-success"; 
 
-    client.connect().then(() => {
+    twitchClient.connect().then(() => {
       statusElement.textContent = `Connected to twitch. Listening for messages in ${channel}...`;
     });
 
-    client.on('message', (wat, tags, message, self) => {
+    twitchClient.on('message', (wat, tags, message, self) => {
       manageOptions(tags, message);
     });
   }
@@ -135,6 +140,7 @@ function manageOptions(tags, message) {
   const excludedchatterstextarea = document.getElementById('excluded-chatters');
   var lines = excludedchatterstextarea.value.split('\n');
   var lines = lines.map(line => line.toLowerCase());
+
   if(validator.isLink(message) == true) { 
     return; 
   }
@@ -142,19 +148,20 @@ function manageOptions(tags, message) {
     return;
   }
   if(document.getElementById('modsonly').checked) {
-    if(isBroadcaster || isMod ) {
+    if(!badges.moderator) {
+      return;
+    }
+    else {
       new TTS(message, tags);
       return;
     }
   }
   if(document.getElementById('exclude-toggle').checked) {
-    console.log(lines);
     if(lines.includes(tags['display-name'].toLowerCase())) {
       return;
     }
     else {
       new TTS(message, tags);
-      console.log('not in lines');
       return;
     }
   }
@@ -229,6 +236,15 @@ document.getElementById("exclude-toggle").addEventListener("change", function() 
   }
 });
 
+document.getElementById("listenBtn").addEventListener("click", function(event){
+  event.preventDefault();
+  if (!isListening) {
+    startListening();
+  } else {
+    stopListening();
+  }
+});
+
 /*
   Fills in the excluded chatters list with a predefined list of known moderation bots
 */
@@ -240,3 +256,15 @@ function fillInBots() {
 window.onload = function() {
   populateVoiceList();
 };
+
+function stopListening() {
+  if (twitchClient) {
+    twitchClient.disconnect();
+    twitchClient = null;
+  }
+  isListening = false;
+  document.getElementById("listenBtn").textContent = "Start Listening";
+  document.getElementById("listenBtn").disabled = false;
+  document.querySelector('#status').className = "alert alert-info";
+  document.querySelector('#status').textContent = "Waiting for channel name...";
+}
