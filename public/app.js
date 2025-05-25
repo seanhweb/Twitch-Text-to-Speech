@@ -156,6 +156,16 @@ function manageOptions(tags, message) {
       return;
     }
   }
+  if(document.getElementById('taggedOnly').checked) {
+    const channel = document.querySelector("#channelname").value.replace(/^#/, '').toLowerCase();
+    if (!message.toLowerCase().includes(`@${channel}`)) {
+      return;
+    }
+    else {
+      new TTS(message, tags); 
+      return;
+    }
+  }
   if(document.getElementById('exclude-toggle').checked) {
     if(lines.includes(tags['display-name'].toLowerCase())) {
       return;
